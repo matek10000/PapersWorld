@@ -1,0 +1,59 @@
+/* Style dla strony głównej */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* Odjęcie wysokości paska nawigacyjnego */
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 4rem 3rem;
+    text-align: center;
+    width: 100%;
+    max-width: 700px;
+  }
+  
+  .card h1 {
+    font-size: 3rem; 
+    margin-bottom: 2rem;
+  }
+  
+  .button {
+    display: inline-block; 
+    background-color: #000; 
+    color: #fff; 
+    text-align: center;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .button:hover {
+    background-color: #333;
+    transform: scale(1.1);
+  }
+  
+  .card p {
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+  
+  .card p a {
+    color: #000;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  .card p a:hover {
+    text-decoration: none;
+  }
+  

@@ -1,0 +1,21 @@
+.village {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 20px;
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .building {
+    position: relative;
+    text-align: center;
+  }
+  
+  .building img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 5px;
+  }
+  
