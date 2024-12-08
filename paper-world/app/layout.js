@@ -1,48 +1,42 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { auth, db } from '../utils/firebaseConfig';
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { useRouter, usePathname } from 'next/navigation';
-import '../styles/globals.css'; // Importowanie stylów globalnych
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../utils/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { useRouter, usePathname } from "next/navigation";
+import "../styles/globals.css";
+import "../styles/loading.css";
 
 const Layout = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isSessionReady, setIsSessionReady] = useState(false);
   const router = useRouter();
-  const pathname = usePathname(); // Uzyskaj aktualną ścieżkę URL
+  const pathname = usePathname();
 
   useEffect(() => {
-    let isMounted = true; // Flaga, czy komponent jest zamontowany
+    let isMounted = true;
 
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (!isMounted) return; // Jeśli komponent został odmontowany, nie rób nic
+      if (!isMounted) return;
 
       if (currentUser) {
         setUser(currentUser);
-
         try {
-          const userRef = doc(db, 'users', currentUser.uid);
+          const userRef = doc(db, "users", currentUser.uid);
           const userSnap = await getDoc(userRef);
-
           if (userSnap.exists() && isMounted) {
-            const data = userSnap.data();
-            setUserData(data);
+            setUserData(userSnap.data());
           }
         } catch (error) {
-          console.error('Błąd podczas pobierania danych użytkownika:', error);
+          console.error("Błąd podczas pobierania danych użytkownika:", error);
         }
       } else {
-        if (isMounted) {
-          setUser(null);
-          setUserData(null);
-          // Sprawdź, czy użytkownik jest na publicznej stronie (login lub register)
-          const publicPages = ['/login', '/register'];
-          if (!publicPages.includes(pathname)) {
-            router.push('/login');
-          }
+        setUser(null);
+        setUserData(null);
+        if (!["/login", "/register"].includes(pathname)) {
+          router.push("/login");
         }
       }
 
@@ -51,7 +45,6 @@ const Layout = ({ children }) => {
       }
     });
 
-    // Funkcja czyszcząca - usuń nasłuch i oznacz, że komponent został odmontowany
     return () => {
       isMounted = false;
       unsubscribe();
@@ -59,7 +52,13 @@ const Layout = ({ children }) => {
   }, [pathname]);
 
   if (!isSessionReady) {
-    return <p>Ładowanie sesji...</p>;
+    return (
+      <html lang="pl">
+        <body>
+          <p>Ładowanie sesji...</p>
+        </body>
+      </html>
+    );
   }
 
   return (
